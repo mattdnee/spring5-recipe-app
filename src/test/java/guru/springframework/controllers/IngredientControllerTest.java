@@ -2,7 +2,6 @@ package guru.springframework.controllers;
 
 import guru.springframework.commands.IngredientCommand;
 import guru.springframework.commands.RecipeCommand;
-import guru.springframework.domain.UnitOfMeasure;
 import guru.springframework.services.IngredientService;
 import guru.springframework.services.RecipeService;
 import guru.springframework.services.UnitOfMeasureService;
@@ -134,5 +133,18 @@ public class IngredientControllerTest {
                 .andExpect(view().name("recipe/ingredient/ingredientform"))
                 .andExpect(model().attributeExists("uomList"));
         verify(recipeService, times(1)).findCommandById(anyLong());
+    }
+    @Test
+    public void testDeleteIngredient() throws Exception{
+        //given
+
+        //when
+
+        //then
+        mockMvc.perform(get("/recipe/1/ingredient/1/deleteById"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("redirect:/recipe/1/ingredients"))
+                .andExpect(model().attributeExists("recipe"));
+        verify(ingredientService, times(1)).deleteById(anyLong(), anyLong());
     }
 }
